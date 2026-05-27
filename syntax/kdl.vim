@@ -10,21 +10,16 @@ syn match kdlNull '#null' display
 syn keyword kdlTodo contained TODO FIXME XXX NOTE
 syn match kdlComment "//.*$" contains=kdlTodo
 
-" Regular int like number with - + or nothing in front
-syn match kdlNumber '\d\+'
-syn match kdlNumber '[-+]\d\+'
+" Binary/Octal/Hex integers: 0b/0o/0x, followed by digit, followed by digit or _
+syn match kdlNumber '[-+]\?0b[01][01_]*'    contained display
+syn match kdlNumber '[-+]\?0o\o\%(\o\|_\)*' contained display
+syn match kdlNumber '[-+]\?0x\x\%(\x\|_\)*' contained display
 
-" Floating point number with decimal no E or e (+,-)
-syn match kdlNumber '\d\+\.\d*' contained display
-syn match kdlNumber '[-+]\d\+\.\d*' contained display
- 
-" Floating point like number with E and no decimal point (+,-)
-syn match kdlNumber '[-+]\=\d[[:digit:]]*[eE][\-+]\=\d\+' contained display
-syn match kdlNumber '\d[[:digit:]]*[eE][\-+]\=\d\+' contained display
- 
-" Floating point like number with E and decimal point (+,-)
-syn match kdlNumber '[-+]\=\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+' contained display
-syn match kdlNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+' contained display
+" Keyword number #inf, #-inf, #nan
+syn match kdlNumber '#\%(-\?inf\|nan\)' contained display
+
+" Floating point numbers (containing '.' and/or 'E'/'e')
+syn match kdlNumber '[-+]\?\d[[:digit:]_]*\%(\.\d[[:digit:]_]*\)\?\%([eE][-+]\?\d[[:digit:]_]*\)' contained display
 
 syn region kdlString start='"' end='"' skip='\\\\\|\\"' display
  
