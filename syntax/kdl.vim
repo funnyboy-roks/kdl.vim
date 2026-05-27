@@ -25,7 +25,14 @@ syn match kdlNumber '\d[[:digit:]]*[eE][\-+]\=\d\+' contained display
 syn match kdlNumber '[-+]\=\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+' contained display
 syn match kdlNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+' contained display
 
-syn region kdlString start='"' end='"' skip='\\\\\|\\"' display
+" Try to error for invalid escape sequence (\<invalid character>, \u{not 1-6 chars}, \u{<non hex char>})
+syn match  kdlEscapeError    '\\u{\%([^}]*[^[:xdigit:]}][^}]*\|[^}]\{7,}\)\?}\|\\.' contained display
+" Valid escape codes (\<valid escpae char>, \u{<1-6 hex>})
+syn match  kdlEscape '\\["nrt\\bfs[:space:]]\|\\u{\x\{1,6}}' contained display
+syn region kdlString start='"'           end='"'      skip='\\\\\|\\"'           display contains=kdlEscape,kdlEscapeError,@Spell
+syn region kdlString start='"""'         end='"""'    skip='\\\\\|\%(""\?[^"]\)' display contains=kdlEscape,kdlEscapeError,@Spell
+syn region kdlString start='\z(#\+\)"'   end='"\z1'                              display contains=@Spell
+syn region kdlString start='\z(#\+\)"""' end='"""\z1'                            display contains=@Spell
  
 syn region kdlChildren start="{" end="}" contains=kdlString,kdlNumber,kdlNode,kdlBool,kdlComment
 
@@ -35,5 +42,7 @@ hi def link kdlTodo        Todo
 hi def link kdlComment     Comment
 hi def link kdlNode        Statement
 hi def link kdlBool        Boolean
+hi def link kdlEscape      Special
+hi def link kdlEscapeError Error
 hi def link kdlString      String
 hi def link kdlNumber      Number
