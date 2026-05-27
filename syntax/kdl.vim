@@ -5,6 +5,7 @@
 "
 syn match kdlNode '\v(\w|-|\=)' display
 syn match kdlBool '#true\|#false' display
+syn match kdlNull '#null' display
 
 syn keyword kdlTodo contained TODO FIXME XXX NOTE
 syn match kdlComment "//.*$" contains=kdlTodo
@@ -27,7 +28,7 @@ syn match kdlNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+' contained display
 
 syn region kdlString start='"' end='"' skip='\\\\\|\\"' display
  
-syn region kdlChildren start="{" end="}" contains=kdlString,kdlNumber,kdlNode,kdlBool,kdlComment
+syn region kdlChildren start="{" end="}" contains=kdlString,kdlNumber,kdlNode,kdlBool,kdlNull,kdlComment
 
 let b:current_syntax = "kdl"
 
@@ -35,5 +36,6 @@ hi def link kdlTodo        Todo
 hi def link kdlComment     Comment
 hi def link kdlNode        Statement
 hi def link kdlBool        Boolean
+hi def link kdlNull        Constant
 hi def link kdlString      String
 hi def link kdlNumber      Number
