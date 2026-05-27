@@ -4,7 +4,7 @@
 " Latest Revision: 29 September 2022
 "
 syn match kdlNode '\v(\w|-|\=)' display
-syn match kdlBool '\v(true|false)' display
+syn match kdlBool '#true\|#false' display
 
 syn keyword kdlTodo contained TODO FIXME XXX NOTE
 syn match kdlComment "//.*$" contains=kdlTodo
