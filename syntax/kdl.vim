@@ -24,7 +24,7 @@ syn match kdlNumber '[-+]\?0x\x\%(\x\|_\)*' contained display
 syn match kdlNumber '#\%(-\?inf\|nan\)' contained display
 
 " Floating point numbers (containing '.' and/or 'E'/'e')
-syn match kdlNumber '[-+]\?\d[[:digit:]_]*\%(\.\d[[:digit:]_]*\)\?\%([eE][-+]\?\d[[:digit:]_]*\)' contained display
+syn match kdlNumber '[-+]\?\d[[:digit:]_]*\%(\.\d[[:digit:]_]*\)\?\%([eE][-+]\?\d[[:digit:]_]*\)\?' contained display
 
 syn region kdlString start='"' end='"' skip='\\\\\|\\"' display
  
